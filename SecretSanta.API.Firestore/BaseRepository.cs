@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using SecretSanta.API.Models;
@@ -9,51 +10,47 @@ namespace SecretSanta.API.Firestore
     public class BaseRepository
     {
         private readonly string _collectionName;
-        public FirestoreDb fireStoreDb;
-
-        public BaseRepository(string collectionName)
+        private readonly FirestoreConfig _config;
+        private readonly FirestoreDb _fireStoreDb;
+        
+        public BaseRepository(string collectionName, FirestoreConfig config)
         {
-            string filepath = "/Users/MyPCUser/Downloads/-firebase-adminsdk-ivk8q-d072fdf334.json";
+            const string filepath = "/Users/HLeto/Downloads/secretsantatest-4e7fc-firebase-adminsdk-sgc8u-e432b491ba.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
-            fireStoreDb = FirestoreDb.Create("studionextdoor-a4166");
+            _fireStoreDb = FirestoreDb.Create(config.ProjectId);
             _collectionName = collectionName;
+            _config = config;
         }
 
-        public T Add<T>(T record) where T : Base
+        public async Task<T> Add<T>(T record) where T : Base
         {
-            CollectionReference colRef = fireStoreDb.Collection(_collectionName);
-            DocumentReference doc = colRef.AddAsync(record).GetAwaiter()
-                .GetResult();
+            var colRef = _fireStoreDb.Collection(_collectionName);
+            var doc = await colRef.AddAsync(record);
             record.Id = doc.Id;
             return record;
         }
 
-        public bool Update<T>(T record) where T : Base
+        public async Task<bool> Update<T>(T record) where T : Base
         {
-            DocumentReference recordRef = fireStoreDb.Collection(_collectionName)
-                .Document(record.Id);
-            recordRef.SetAsync(record, SetOptions.MergeAll).GetAwaiter()
-                .GetResult();
+            var recordRef = _fireStoreDb.Collection(_collectionName).Document(record.Id);
+            var result = await recordRef.SetAsync(record, SetOptions.MergeAll);
             return true;
         }
 
-        public bool Delete<T>(T record) where T : Base
+        public async Task<bool> Delete<T>(T record) where T : Base
         {
-            DocumentReference recordRef = fireStoreDb.Collection(_collectionName)
-                .Document(record.Id);
-            recordRef.DeleteAsync().GetAwaiter().GetResult();
+            var recordRef = _fireStoreDb.Collection(_collectionName).Document(record.Id);
+            var result = await recordRef.DeleteAsync();
             return true;
         }
 
-        public T Get<T>(T record) where T : Base
+        public async Task<T> Get<T>(T record) where T : Base
         {
-            DocumentReference docRef = fireStoreDb.Collection(_collectionName)
-                .Document(record.Id);
-            DocumentSnapshot snapshot =
-                docRef.GetSnapshotAsync().GetAwaiter().GetResult();
+            var docRef = _fireStoreDb.Collection(_collectionName).Document(record.Id);
+            var snapshot = await docRef.GetSnapshotAsync();
             if (snapshot.Exists)
             {
-                T usr = snapshot.ConvertTo<T>();
+                var usr = snapshot.ConvertTo<T>();
                 usr.Id = snapshot.Id;
                 return usr;
             }
@@ -63,41 +60,37 @@ namespace SecretSanta.API.Firestore
             }
         }
 
-        public List<T> GetAll<T>() where T : Base
+        public async Task<IEnumerable<User>> GetAll<T>() where T : Base
         {
-            Query query = fireStoreDb.Collection(_collectionName);
-            QuerySnapshot querySnapshot =
-                query.GetSnapshotAsync().GetAwaiter().GetResult();
-            List<T> list = new List<T>();
-            foreach (DocumentSnapshot documentSnapshot in querySnapshot
-                .Documents)
+            var query = _fireStoreDb.Collection(_collectionName);
+            var querySnapshot = await query.GetSnapshotAsync();
+            var list = new List<T>();
+            foreach (var documentSnapshot in querySnapshot.Documents)
             {
                 if (documentSnapshot.Exists)
                 {
-                    Dictionary<string, object> city =
-                        documentSnapshot.ToDictionary();
-                    string json = JsonConvert.SerializeObject(city);
-                    T newItem = JsonConvert.DeserializeObject<T>(json);
+                    var city = documentSnapshot.ToDictionary();
+                    var json = JsonConvert.SerializeObject(city);
+                    var newItem = JsonConvert.DeserializeObject<T>(json);
                     newItem.Id = documentSnapshot.Id;
                     list.Add(newItem);
                 }
             }
 
-            return list;
+            return (IEnumerable<User>)list;
         }
 
-        public List<T> QueryRecords<T>(Query query) where T : Base
+        public async Task<List<T>> QueryRecords<T>(Query query) where T : Base
         {
-            QuerySnapshot querySnapshot = query.GetSnapshotAsync().GetAwaiter().GetResult();
-            List<T> list = new List<T>();
-            foreach (DocumentSnapshot documentSnapshot in querySnapshot
-                .Documents)
+            var querySnapshot = await query.GetSnapshotAsync();
+            var list = new List<T>();
+            foreach (var documentSnapshot in querySnapshot.Documents)
             {
                 if (documentSnapshot.Exists)
                 {
-                    Dictionary<string, object> city = documentSnapshot.ToDictionary();
+                    var city = documentSnapshot.ToDictionary();
                     var json = JsonConvert.SerializeObject(city);
-                    T newItem = JsonConvert.DeserializeObject<T>(json);
+                    var newItem = JsonConvert.DeserializeObject<T>(json);
                     newItem.Id = documentSnapshot.Id;
                     list.Add(newItem);
                 }
