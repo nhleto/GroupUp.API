@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using SecretSanta.API.Models;
+using SecretSanta.API.Models.Interfaces;
 
 namespace SecretSanta.API.Firestore
 {
@@ -12,10 +13,6 @@ namespace SecretSanta.API.Firestore
             {
                 throw new ArgumentNullException(nameof(config));
             }
-            
-            var baseRepo = new BaseRepository("User", config);
-            var userRepo = new UserRepository(baseRepo);
-            services.AddSingleton(userRepo);
         }
     }
 }

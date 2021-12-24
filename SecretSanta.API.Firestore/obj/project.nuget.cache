@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Mz0ldlwD3+oEo0mWJ5zl46VK0jHdK5Gkqv9gVt/Y28T10Ix2Wo8dB9+Gu70cePbpd8F5sX1NZ0dKRWck+q2X/Q==",
+  "dgSpecHash": "jY4n01JzfVHfHNK8FlXfRiFCR36wCCER9grppxDtFtNjjdaov9eNEHfXdqsvmbzo90yDwpk71UWGLovuQgHdRQ==",
   "success": true,
   "projectFilePath": "/Users/HLeto/Projects/SecretSanta.API/SecretSanta.API.Firestore/SecretSanta.API.Firestore.csproj",
   "expectedPackageFiles": [
@@ -19,11 +19,16 @@
     "/Users/HLeto/.nuget/packages/grpc.core/2.36.4/grpc.core.2.36.4.nupkg.sha512",
     "/Users/HLeto/.nuget/packages/grpc.core.api/2.36.4/grpc.core.api.2.36.4.nupkg.sha512",
     "/Users/HLeto/.nuget/packages/microsoft.bcl.asyncinterfaces/1.0.0/microsoft.bcl.asyncinterfaces.1.0.0.nupkg.sha512",
+    "/Users/HLeto/.nuget/packages/microsoft.extensions.configuration/6.0.0/microsoft.extensions.configuration.6.0.0.nupkg.sha512",
+    "/Users/HLeto/.nuget/packages/microsoft.extensions.configuration.abstractions/6.0.0/microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+    "/Users/HLeto/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "/Users/HLeto/.nuget/packages/microsoft.extensions.options/6.0.0/microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "/Users/HLeto/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "/Users/HLeto/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
     "/Users/HLeto/.nuget/packages/system.collections.immutable/1.4.0/system.collections.immutable.1.4.0.nupkg.sha512",
     "/Users/HLeto/.nuget/packages/system.linq.async/4.0.0/system.linq.async.4.0.0.nupkg.sha512",
     "/Users/HLeto/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
-    "/Users/HLeto/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.2/system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+    "/Users/HLeto/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

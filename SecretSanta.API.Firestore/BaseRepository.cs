@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using SecretSanta.API.Models;
@@ -10,16 +11,15 @@ namespace SecretSanta.API.Firestore
     public class BaseRepository
     {
         private readonly string _collectionName;
-        private readonly FirestoreConfig _config;
         private readonly FirestoreDb _fireStoreDb;
         
-        public BaseRepository(string collectionName, FirestoreConfig config)
+        public BaseRepository(string collectionName)
         {
-            const string filepath = "/Users/HLeto/Downloads/secretsantatest-4e7fc-firebase-adminsdk-sgc8u-e432b491ba.json";
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
+            var env = Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS");
+            var config = JsonConvert.DeserializeObject<FirestoreConfig>
+                (Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS") ?? string.Empty);
             _fireStoreDb = FirestoreDb.Create(config.ProjectId);
             _collectionName = collectionName;
-            _config = config;
         }
 
         public async Task<T> Add<T>(T record) where T : Base
@@ -60,7 +60,7 @@ namespace SecretSanta.API.Firestore
             }
         }
 
-        public async Task<IEnumerable<User>> GetAll<T>() where T : Base
+        public async Task<IEnumerable<T>> GetAll<T>() where T : Base
         {
             var query = _fireStoreDb.Collection(_collectionName);
             var querySnapshot = await query.GetSnapshotAsync();
@@ -77,7 +77,7 @@ namespace SecretSanta.API.Firestore
                 }
             }
 
-            return (IEnumerable<User>)list;
+            return list;
         }
 
         public async Task<List<T>> QueryRecords<T>(Query query) where T : Base

@@ -4,7 +4,7 @@ using Google.Cloud.Firestore;
 namespace SecretSanta.API.Models
 {
     [FirestoreData]
-    public class Group
+    public class Group : Base
     {
         [FirestoreProperty]
         public IEnumerable<User> Users { get; set; }

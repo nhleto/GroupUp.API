@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,11 +7,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SecretSanta.API.Firestore;
 using SecretSanta.API.Models;
+using SecretSanta.API.Models.Interfaces;
 
 namespace SecretSanta.API
 {
     public class Startup
     {
+        private const string Filepath = "../secretsantatest-4e7fc-firebase-adminsdk-sgc8u-e432b491ba.json";
+        
         public Startup(IWebHostEnvironment environment)
         {
             var builder = new ConfigurationBuilder()
@@ -22,6 +26,7 @@ namespace SecretSanta.API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", Filepath);
         }
 
         private IConfiguration Configuration { get; }
@@ -37,8 +42,9 @@ namespace SecretSanta.API
 
             services.AddSwaggerGenNewtonsoftSupport();
 
-            var firestoreConfig = Configuration.GetSection("Firestore").Get<FirestoreConfig>();
-            services.AddFirestore(firestoreConfig);
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IGroupRepository, GroupRepository>();
+            services.Configure<FirestoreConfig>(Configuration.GetSection("Firestore"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +57,7 @@ namespace SecretSanta.API
             
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SecretSanta.API v1"));
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
