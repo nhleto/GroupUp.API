@@ -42,7 +42,10 @@ namespace SecretSanta.API
 
             services.AddSwaggerGenNewtonsoftSupport();
 
+            var config = Configuration.GetSection("Firestore").Get<FirestoreConfig>();
+            
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton(config);            
             services.AddSingleton<IGroupRepository, GroupRepository>();
             services.Configure<FirestoreConfig>(Configuration.GetSection("Firestore"));
         }

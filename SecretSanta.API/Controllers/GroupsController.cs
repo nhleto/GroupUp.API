@@ -19,7 +19,7 @@ namespace SecretSanta.API.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllGroups()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace SecretSanta.API.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(string id)
+        public async Task<IActionResult> GetGroup(string id)
         {
             try
             {

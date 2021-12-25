@@ -10,12 +10,14 @@ namespace SecretSanta.API.Firestore
 {
     public class UserRepository : IUserRepository
     {
+        private readonly FirestoreConfig _config;
         private const string CollectionName = "Users";
         private readonly FirestoreDb _fireStoreDb;
 
-        public UserRepository(IOptions<FirestoreConfig> options)
+        public UserRepository(IOptions<FirestoreConfig> options, FirestoreConfig config)
         {
-             _fireStoreDb = FirestoreDb.Create(options.Value.ProjectId);
+            _config = config;
+            _fireStoreDb = FirestoreDb.Create(config.ProjectId);
         }
 
         public async Task<User> Add(User record)

@@ -10,5 +10,7 @@ namespace SecretSanta.API.Models
         public string Name { get; set; }
         [FirestoreProperty]
         public IEnumerable<string> WishList { get; set; }
+        [FirestoreProperty]
+        public IEnumerable<Group> Groups { get; set; }
     }
 }
