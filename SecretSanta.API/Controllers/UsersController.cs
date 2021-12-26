@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.API.Models;
 using SecretSanta.API.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace SecretSanta.API.Controllers
 {
@@ -18,7 +20,24 @@ namespace SecretSanta.API.Controllers
             _userRepository = userRepository;
         }
 
+        // [HttpPost("verify")]
+        // public async Task<IActionResult> VerifyToken(TokenV request)
+        // {
+        //     var auth = FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance;
+        //
+        //     try
+        //     {
+        //         var response = await auth.VerifyIdTokenAsync(request.)
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Console.WriteLine(e);
+        //         throw;
+        //     }
+        // }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             try

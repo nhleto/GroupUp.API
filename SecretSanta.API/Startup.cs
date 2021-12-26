@@ -1,9 +1,12 @@
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SecretSanta.API.Firestore;
 using SecretSanta.API.Models;
@@ -48,6 +51,26 @@ namespace SecretSanta.API
             services.AddSingleton(config);            
             services.AddSingleton<IGroupRepository, GroupRepository>();
             services.Configure<FirestoreConfig>(Configuration.GetSection("Firestore"));
+            
+            services.AddSpaStaticFiles(conf =>
+            {
+                conf.RootPath = "wwwroot";
+            });
+            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    var firebaseProjectName = Configuration[config.ProjectId];
+                    options.Authority = "https://securetoken.google.com/" + firebaseProjectName;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/" + firebaseProjectName,
+                        ValidateAudience = true,
+                        ValidAudience = firebaseProjectName,
+                        ValidateLifetime = true
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,13 +84,24 @@ namespace SecretSanta.API
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SecretSanta.API v1"));
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
+            app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "client-app";
+                if (env.IsDevelopment() || env.IsEnvironment("local"))
+                {
+                    var startScript = env.IsEnvironment("local") ? "start-local" : "start";
+                    spa.UseAngularCliServer(npmScript: startScript);
+                }
+            });
         }
     }
 }
