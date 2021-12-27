@@ -1,4 +1,4 @@
-namespace SecretSanta.API.Models
+namespace SecretSanta.API.Domain.Models
 {
     public class Base
     {

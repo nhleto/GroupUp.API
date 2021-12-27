@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CAWIEaov9HSJAKktuQZualWmJs0e7GA2DaNjMp/vklMguTnsc33YkSrqokaZjtrN1fVtED9hFuTORSk9ORGWWg==",
+  "dgSpecHash": "KpUKW6vt52GsdypTRM/j4PMi7CRuS7zw9ziWrx9Lv6+Lq0hg/DzKzqLWTXlUHmyfYdyJLUq8yOW8HF/NTxl5Lw==",
   "success": true,
   "projectFilePath": "/Users/HLeto/Projects/SecretSanta.API/SecretSanta.API.Firestore/SecretSanta.API.Firestore.csproj",
   "expectedPackageFiles": [

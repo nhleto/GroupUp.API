@@ -2323,6 +2323,19 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
+      "SecretSanta.API.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Google.Cloud.Firestore": "2.4.0"
+        },
+        "compile": {
+          "bin/placeholder/SecretSanta.API.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SecretSanta.API.Domain.dll": {}
+        }
+      },
       "SecretSanta.API.Firestore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -2331,26 +2344,13 @@
           "Google.Cloud.Firestore": "2.4.0",
           "Microsoft.Extensions.Configuration": "6.0.0",
           "Microsoft.Extensions.Options": "6.0.0",
-          "SecretSanta.API.Models": "1.0.0"
+          "SecretSanta.API.Domain": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SecretSanta.API.Firestore.dll": {}
         },
         "runtime": {
           "bin/placeholder/SecretSanta.API.Firestore.dll": {}
-        }
-      },
-      "SecretSanta.API.Models/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Google.Cloud.Firestore": "2.4.0"
-        },
-        "compile": {
-          "bin/placeholder/SecretSanta.API.Models.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SecretSanta.API.Models.dll": {}
         }
       }
     }
@@ -7529,15 +7529,15 @@
         "system.xml.xdocument.nuspec"
       ]
     },
+    "SecretSanta.API.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SecretSanta.API.Domain/SecretSanta.API.Domain.csproj",
+      "msbuildProject": "../SecretSanta.API.Domain/SecretSanta.API.Domain.csproj"
+    },
     "SecretSanta.API.Firestore/1.0.0": {
       "type": "project",
       "path": "../SecretSanta.API.Firestore/SecretSanta.API.Firestore.csproj",
       "msbuildProject": "../SecretSanta.API.Firestore/SecretSanta.API.Firestore.csproj"
-    },
-    "SecretSanta.API.Models/1.0.0": {
-      "type": "project",
-      "path": "../SecretSanta.API.Models/SecretSanta.API.Models.csproj",
-      "msbuildProject": "../SecretSanta.API.Models/SecretSanta.API.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {

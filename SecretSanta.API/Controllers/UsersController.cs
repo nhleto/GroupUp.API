@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SecretSanta.API.Models;
-using SecretSanta.API.Models.Interfaces;
+using SecretSanta.API.Domain.Interfaces;
+using SecretSanta.API.Domain.Models;
 
 namespace SecretSanta.API.Controllers
 {
@@ -22,7 +22,7 @@ namespace SecretSanta.API.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -37,7 +37,7 @@ namespace SecretSanta.API.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(string id)
+        public async Task<IActionResult> Get(string id)
         {
             try
             {
@@ -53,15 +53,15 @@ namespace SecretSanta.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromBody] User user)
+        public async Task<IActionResult> SignUp([FromBody] User user)
         {
             try
             {
-                var result = await _userRepository.Add(user);
-                var uid = result.Id;
-                var customToken = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync(uid);
+                var result = await _userRepository.SignUp(user);
+                // var uid = result.Id;
+                // var customToken = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync(uid);
                 
-                return Ok(customToken);
+                return Ok(result);
             }
             catch (Exception e)
             {

@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using SecretSanta.API.Models;
-using SecretSanta.API.Models.Interfaces;
+using SecretSanta.API.Domain;
+using SecretSanta.API.Domain.Interfaces;
+using SecretSanta.API.Domain.Models;
 
 namespace SecretSanta.API.Firestore
 {

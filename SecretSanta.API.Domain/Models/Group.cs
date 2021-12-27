@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Google.Cloud.Firestore;
 
-namespace SecretSanta.API.Models
+namespace SecretSanta.API.Domain.Models
 {
     [FirestoreData]
     public class Group : Base

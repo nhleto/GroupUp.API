@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SecretSanta.API.Models;
-using SecretSanta.API.Models.Interfaces;
+using SecretSanta.API.Domain.Interfaces;
+using SecretSanta.API.Domain.Models;
 
 namespace SecretSanta.API.Controllers
 {

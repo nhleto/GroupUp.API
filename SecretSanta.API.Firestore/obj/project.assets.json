@@ -355,17 +355,17 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "SecretSanta.API.Models/1.0.0": {
+      "SecretSanta.API.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Google.Cloud.Firestore": "2.4.0"
         },
         "compile": {
-          "bin/placeholder/SecretSanta.API.Models.dll": {}
+          "bin/placeholder/SecretSanta.API.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/SecretSanta.API.Models.dll": {}
+          "bin/placeholder/SecretSanta.API.Domain.dll": {}
         }
       }
     }
@@ -956,10 +956,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "SecretSanta.API.Models/1.0.0": {
+    "SecretSanta.API.Domain/1.0.0": {
       "type": "project",
-      "path": "../SecretSanta.API.Models/SecretSanta.API.Models.csproj",
-      "msbuildProject": "../SecretSanta.API.Models/SecretSanta.API.Models.csproj"
+      "path": "../SecretSanta.API.Domain/SecretSanta.API.Domain.csproj",
+      "msbuildProject": "../SecretSanta.API.Domain/SecretSanta.API.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -968,7 +968,7 @@
       "Google.Cloud.Firestore >= 2.4.0",
       "Microsoft.Extensions.Configuration >= 6.0.0",
       "Microsoft.Extensions.Options >= 6.0.0",
-      "SecretSanta.API.Models >= 1.0.0"
+      "SecretSanta.API.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -996,8 +996,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "/Users/HLeto/Projects/SecretSanta.API/SecretSanta.API.Models/SecretSanta.API.Models.csproj": {
-              "projectPath": "/Users/HLeto/Projects/SecretSanta.API/SecretSanta.API.Models/SecretSanta.API.Models.csproj"
+            "/Users/HLeto/Projects/SecretSanta.API/SecretSanta.API.Domain/SecretSanta.API.Domain.csproj": {
+              "projectPath": "/Users/HLeto/Projects/SecretSanta.API/SecretSanta.API.Domain/SecretSanta.API.Domain.csproj"
             }
           }
         }

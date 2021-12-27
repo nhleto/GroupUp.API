@@ -4,8 +4,10 @@ using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using SecretSanta.API.Models;
-using SecretSanta.API.Models.Interfaces;
+using SecretSanta.API.Domain;
+using SecretSanta.API.Domain.Interfaces;
+using SecretSanta.API.Domain.Models;
+using SecretSanta.API.Firestore.Utility;
 
 namespace SecretSanta.API.Firestore
 {
@@ -21,17 +23,17 @@ namespace SecretSanta.API.Firestore
             _fireStoreDb = FirestoreDb.Create(config.ProjectId);
         }
 
-        public async Task<User> Add(User record)
+        public async Task<User> SignUp(User record)
         {
-            var userRecord = new UserRecordArgs
-            {
-                DisplayName = record.DisplayName
-            };
-            
-            var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(userRecord);
+            var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(UserMapper.MapUsernameToEmail(record));
             record.Id = newUser.Uid;
             return record;
         }
+
+        // public async Task SignIn(User user)
+        // {
+        //     var users = await FirebaseAuth.DefaultInstance.GetUserByEmailAsync();
+        // }
 
         public async Task<bool> Update(User record)
         {

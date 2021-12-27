@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SecretSanta.API.Domain;
+using SecretSanta.API.Domain.Interfaces;
 using SecretSanta.API.Firestore;
-using SecretSanta.API.Models;
-using SecretSanta.API.Models.Interfaces;
 
 namespace SecretSanta.API
 {

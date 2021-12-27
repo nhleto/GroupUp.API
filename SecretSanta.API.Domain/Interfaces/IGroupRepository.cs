@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
+using SecretSanta.API.Domain.Models;
 
-namespace SecretSanta.API.Models.Interfaces
+namespace SecretSanta.API.Domain.Interfaces
 {
     public interface IGroupRepository
     {
