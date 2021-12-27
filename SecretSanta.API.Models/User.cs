@@ -7,7 +7,7 @@ namespace SecretSanta.API.Models
     public class User : Base
     {
         [FirestoreProperty]
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
         [FirestoreProperty]
         public IEnumerable<string> WishList { get; set; }
         [FirestoreProperty]

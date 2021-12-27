@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -22,28 +23,36 @@ namespace SecretSanta.API.Firestore
 
         public async Task<User> Add(User record)
         {
-             var colRef = _fireStoreDb.Collection(CollectionName);
-             var doc = await colRef.AddAsync(record);
-             record.Id = doc.Id;
-             return record;            
+            var userRecord = new UserRecordArgs
+            {
+                DisplayName = record.DisplayName
+            };
+            
+            var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(userRecord);
+            record.Id = newUser.Uid;
+            return record;
         }
+
         public async Task<bool> Update(User record)
         {
-            var recordRef = _fireStoreDb.Collection(CollectionName).Document(record.Id);
+            var recordRef = _fireStoreDb.Collection(CollectionName)
+                .Document(record.Id);
             var result = await recordRef.SetAsync(record, SetOptions.MergeAll);
             return true;
         }
 
         public async Task<bool> Delete(User record)
         {
-            var recordRef = _fireStoreDb.Collection(CollectionName).Document(record.Id);
+            var recordRef = _fireStoreDb.Collection(CollectionName)
+                .Document(record.Id);
             var result = await recordRef.DeleteAsync();
             return true;
         }
 
         public async Task<User> Get(User record)
         {
-            var docRef = _fireStoreDb.Collection(CollectionName).Document(record.Id);
+            var docRef = _fireStoreDb.Collection(CollectionName)
+                .Document(record.Id);
             var snapshot = await docRef.GetSnapshotAsync();
             if (snapshot.Exists)
             {

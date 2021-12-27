@@ -1,8 +1,9 @@
 using System;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +31,11 @@ namespace SecretSanta.API
 
             Configuration = builder.Build();
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", Filepath);
+                        
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = GoogleCredential.GetApplicationDefault(),
+            });
         }
 
         private IConfiguration Configuration { get; }
@@ -46,16 +52,10 @@ namespace SecretSanta.API
             services.AddSwaggerGenNewtonsoftSupport();
 
             var config = Configuration.GetSection("Firestore").Get<FirestoreConfig>();
-            
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton(config);            
             services.AddSingleton<IGroupRepository, GroupRepository>();
             services.Configure<FirestoreConfig>(Configuration.GetSection("Firestore"));
-            
-            services.AddSpaStaticFiles(conf =>
-            {
-                conf.RootPath = "wwwroot";
-            });
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -86,22 +86,11 @@ namespace SecretSanta.API
 
             app.UseRouting();
 
-            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "client-app";
-                if (env.IsDevelopment() || env.IsEnvironment("local"))
-                {
-                    var startScript = env.IsEnvironment("local") ? "start-local" : "start";
-                    spa.UseAngularCliServer(npmScript: startScript);
-                }
-            });
         }
     }
 }
