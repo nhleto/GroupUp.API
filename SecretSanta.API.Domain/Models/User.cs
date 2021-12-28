@@ -15,6 +15,8 @@ namespace SecretSanta.API.Domain.Models
         
         [FirestoreProperty]
         public IEnumerable<Group> Groups { get; set; }
+
+        public string Email { get; set; }
         
         [Required]
         [MinLength(6)]

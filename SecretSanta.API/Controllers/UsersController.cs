@@ -14,10 +14,12 @@ namespace SecretSanta.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserWorkflow _userWorkflow;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserRepository userRepository, IUserWorkflow userWorkflow)
         {
             _userRepository = userRepository;
+            _userWorkflow = userWorkflow;
         }
 
         [HttpGet]
@@ -58,15 +60,25 @@ namespace SecretSanta.API.Controllers
             try
             {
                 var result = await _userRepository.SignUp(user);
-                // var uid = result.Id;
-                // var customToken = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync(uid);
-                
                 return Ok(result);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new Exception("Failure to CreateUserAsync: " + e);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn([FromBody] User user)
+        {
+            try
+            {
+                var result = await _userWorkflow.HandleSignIn(user);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failure to SignIn user: " + e);
             }
         }
     }

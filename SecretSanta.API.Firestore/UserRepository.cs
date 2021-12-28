@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SecretSanta.API.Domain;
+using SecretSanta.API.Domain.DTO;
 using SecretSanta.API.Domain.Interfaces;
 using SecretSanta.API.Domain.Models;
 using SecretSanta.API.Firestore.Utility;
@@ -13,27 +15,40 @@ namespace SecretSanta.API.Firestore
 {
     public class UserRepository : IUserRepository
     {
-        private readonly FirestoreConfig _config;
         private const string CollectionName = "Users";
         private readonly FirestoreDb _fireStoreDb;
+        private readonly IMapper _mapper;
 
-        public UserRepository(IOptions<FirestoreConfig> options, FirestoreConfig config)
+        public UserRepository(FirestoreConfig config, IMapper mapper)
         {
-            _config = config;
+            _mapper = mapper;
             _fireStoreDb = FirestoreDb.Create(config.ProjectId);
         }
 
-        public async Task<User> SignUp(User record)
+        public async Task<UserDto> SignUp(User record)
         {
-            var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(UserMapper.MapUsernameToEmail(record));
-            record.Id = newUser.Uid;
-            return record;
+            try
+            {
+                var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(UserMapper.AppendEmailToUsername(record));
+                return _mapper.Map<UserDto>(newUser);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failure to CreateUserAsync: " + e);
+            }
         }
 
-        // public async Task SignIn(User user)
-        // {
-        //     var users = await FirebaseAuth.DefaultInstance.GetUserByEmailAsync();
-        // }
+        public async Task<UserRecord> FindUserByEmail(User user)
+        {
+            try
+            {
+                return await FirebaseAuth.DefaultInstance.GetUserByEmailAsync(user.Email);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failure to SignIn: " + e);
+            }
+        }
 
         public async Task<bool> Update(User record)
         {

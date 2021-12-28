@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using AutoMapper;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +14,8 @@ using Microsoft.OpenApi.Models;
 using SecretSanta.API.Domain;
 using SecretSanta.API.Domain.Interfaces;
 using SecretSanta.API.Firestore;
+using SecretSanta.API.Firestore.Utility;
+using SecretSanta.API.Firestore.Workflows;
 
 namespace SecretSanta.API
 {
@@ -55,7 +59,7 @@ namespace SecretSanta.API
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton(config);            
             services.AddSingleton<IGroupRepository, GroupRepository>();
-            services.Configure<FirestoreConfig>(Configuration.GetSection("Firestore"));
+            services.AddSingleton<IUserWorkflow, UserWorkflow>();
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -71,7 +75,10 @@ namespace SecretSanta.API
                         ValidateLifetime = true
                     };
                 });
+
+            services.AddAutoMapper(typeof(MappingProfile));
         }
+            
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
