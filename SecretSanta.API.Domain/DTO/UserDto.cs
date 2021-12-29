@@ -12,5 +12,7 @@ namespace SecretSanta.API.Domain.DTO
         public IEnumerable<Group> Groups { get; set; }
 
         public IEnumerable<string> WishList { get; set; }
+        
+        public string Token { get; set; }
     }
 }

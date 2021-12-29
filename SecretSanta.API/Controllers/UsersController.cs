@@ -38,23 +38,7 @@ namespace SecretSanta.API.Controllers
             }
         }
         
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            try
-            {
-                var user = new User { Id = id };
-                var result = await _userRepository.Get(user);
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        [HttpPost]
+        [HttpPost("Signup")]
         public async Task<IActionResult> SignUp([FromBody] User user)
         {
             try
@@ -68,7 +52,7 @@ namespace SecretSanta.API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("Signin")]
         public async Task<IActionResult> SignIn([FromBody] User user)
         {
             try
@@ -76,9 +60,9 @@ namespace SecretSanta.API.Controllers
                 var result = await _userWorkflow.HandleSignIn(user);
                 return Ok(result);
             }
-            catch (Exception e)
+            catch (FirebaseAuthException ex)
             {
-                throw new Exception("Failure to SignIn user: " + e);
+                throw new Exception("Failure to SignIn user: " + ex);
             }
         }
     }

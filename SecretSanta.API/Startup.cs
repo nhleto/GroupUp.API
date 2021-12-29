@@ -22,7 +22,8 @@ namespace SecretSanta.API
     public class Startup
     {
         private const string Filepath = "../secretsantatest-4e7fc-firebase-adminsdk-sgc8u-e432b491ba.json";
-        
+        // private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IWebHostEnvironment environment)
         {
             var builder = new ConfigurationBuilder()
@@ -75,6 +76,15 @@ namespace SecretSanta.API
                         ValidateLifetime = true
                     };
                 });
+            
+            // services.AddCors(options =>
+            // {
+            //     options.AddPolicy(name: MyAllowSpecificOrigins,
+            //         builder =>
+            //         {
+            //             builder.WithOrigins("http://localhost:4200/");
+            //         });
+            // });
 
             services.AddAutoMapper(typeof(MappingProfile));
         }
@@ -92,7 +102,8 @@ namespace SecretSanta.API
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SecretSanta.API v1"));
 
             app.UseRouting();
-
+            // app.UseCors(MyAllowSpecificOrigins);
+            
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHttpsRedirection();

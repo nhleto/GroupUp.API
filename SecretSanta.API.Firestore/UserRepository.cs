@@ -29,7 +29,9 @@ namespace SecretSanta.API.Firestore
         {
             try
             {
-                var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(UserMapper.AppendEmailToUsername(record));
+                // This mapper isn't something that should be in the client...
+                var mappedUser = UserMapper.AppendEmailToUsername(record);
+                var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(_mapper.Map<UserRecordArgs>(mappedUser));
                 return _mapper.Map<UserDto>(newUser);
             }
             catch (Exception e)
@@ -40,14 +42,7 @@ namespace SecretSanta.API.Firestore
 
         public async Task<UserRecord> FindUserByEmail(User user)
         {
-            try
-            {
-                return await FirebaseAuth.DefaultInstance.GetUserByEmailAsync(user.Email);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Failure to SignIn: " + e);
-            }
+            return await FirebaseAuth.DefaultInstance.GetUserByEmailAsync(user.Email);
         }
 
         public async Task<bool> Update(User record)

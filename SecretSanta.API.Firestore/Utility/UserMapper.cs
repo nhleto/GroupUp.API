@@ -5,9 +5,9 @@ namespace SecretSanta.API.Firestore.Utility
 {
     public static class UserMapper
     {
-        public static UserRecordArgs AppendEmailToUsername(User user)
+        public static User AppendEmailToUsername(User user)
         {
-            return new UserRecordArgs
+            return new User
             {
                 DisplayName = user.DisplayName,
                 Email = user.DisplayName + "@example.com",
