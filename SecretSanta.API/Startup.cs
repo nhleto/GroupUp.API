@@ -21,8 +21,10 @@ namespace SecretSanta.API
 {
     public class Startup
     {
-        private const string Filepath = "../secretsantatest-4e7fc-firebase-adminsdk-sgc8u-e432b491ba.json";
-        // private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        // Dependant on the computer
+        private const string Filepath = "../secretsantatest-4e7fc-firebase-adminsdk-sgc8u-1c33a72b5b.json";
+        private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 
         public Startup(IWebHostEnvironment environment)
         {
@@ -77,14 +79,17 @@ namespace SecretSanta.API
                     };
                 });
             
-            // services.AddCors(options =>
-            // {
-            //     options.AddPolicy(name: MyAllowSpecificOrigins,
-            //         builder =>
-            //         {
-            //             builder.WithOrigins("http://localhost:4200/");
-            //         });
-            // });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
 
             services.AddAutoMapper(typeof(MappingProfile));
         }
@@ -102,8 +107,7 @@ namespace SecretSanta.API
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SecretSanta.API v1"));
 
             app.UseRouting();
-            // app.UseCors(MyAllowSpecificOrigins);
-            
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseHttpsRedirection();
