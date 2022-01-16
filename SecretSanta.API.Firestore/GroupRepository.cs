@@ -14,9 +14,9 @@ namespace SecretSanta.API.Firestore
         private const string CollectionName = "Groups";
         private readonly FirestoreDb _fireStoreDb;
 
-        public GroupRepository(IOptions<FirestoreConfig> options)
+        public GroupRepository(FirestoreConfig config)
         {
-            _fireStoreDb = FirestoreDb.Create(options.Value.ProjectId);
+            _fireStoreDb = FirestoreDb.Create(config.ProjectId);
         }
 
         public async Task<Group> Add(Group record)

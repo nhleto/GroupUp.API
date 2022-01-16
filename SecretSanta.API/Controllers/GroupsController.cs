@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.API.Domain.Interfaces;
 using SecretSanta.API.Domain.Models;
@@ -19,6 +20,7 @@ namespace SecretSanta.API.Controllers
         }
         
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllGroups()
         {
             try

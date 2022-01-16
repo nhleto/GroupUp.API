@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SecretSanta.API.Domain;
@@ -24,7 +25,6 @@ namespace SecretSanta.API
         // Dependant on the computer
         private const string Filepath = "../secretsantatest-4e7fc-firebase-adminsdk-sgc8u-1c33a72b5b.json";
         private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 
         public Startup(IWebHostEnvironment environment)
         {
@@ -67,7 +67,7 @@ namespace SecretSanta.API
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    var firebaseProjectName = Configuration[config.ProjectId];
+                    var firebaseProjectName = config.ProjectId;
                     options.Authority = "https://securetoken.google.com/" + firebaseProjectName;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
