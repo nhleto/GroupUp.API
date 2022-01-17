@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupUp.API", "GroupUp.API\GroupUp.API.csproj", "{3035F2CB-0984-4CCB-BFD3-D370E169419C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupUp.API.Domain", "GroupUp.API.Domain\GroupUp.API.Domain.csproj", "{258B56F4-9DB3-4558-87B6-D325AA640CBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupUp.API.Firestore", "GroupUp.API.Firestore\GroupUp.API.Firestore.csproj", "{A1220C73-DBEF-4A3F-B840-07D0E21BC8E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3035F2CB-0984-4CCB-BFD3-D370E169419C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3035F2CB-0984-4CCB-BFD3-D370E169419C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3035F2CB-0984-4CCB-BFD3-D370E169419C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3035F2CB-0984-4CCB-BFD3-D370E169419C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{258B56F4-9DB3-4558-87B6-D325AA640CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258B56F4-9DB3-4558-87B6-D325AA640CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258B56F4-9DB3-4558-87B6-D325AA640CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258B56F4-9DB3-4558-87B6-D325AA640CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1220C73-DBEF-4A3F-B840-07D0E21BC8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1220C73-DBEF-4A3F-B840-07D0E21BC8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1220C73-DBEF-4A3F-B840-07D0E21BC8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1220C73-DBEF-4A3F-B840-07D0E21BC8E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
