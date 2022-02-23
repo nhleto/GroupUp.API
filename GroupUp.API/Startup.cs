@@ -23,7 +23,7 @@ namespace GroupUp.API
     public class Startup
     {
         // Dependant on the computer
-        private const string Filepath = "../secretsantatest-4e7fc-firebase-adminsdk-sgc8u-00a5cde4d3.json";
+        private const string Filepath = "../secret-santa-api-key.json";
         private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IWebHostEnvironment environment)
