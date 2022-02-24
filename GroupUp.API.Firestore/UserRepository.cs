@@ -39,12 +39,7 @@ namespace GroupUp.API.Firestore
                 throw new Exception("Failure to CreateUserAsync: " + e);
             }
         }
-
-        public async Task<UserRecord> FindUserByEmail(User user)
-        {
-            return await FirebaseAuth.DefaultInstance.GetUserByEmailAsync(user.Email);
-        }
-
+        
         public async Task<bool> Update(User record)
         {
             var recordRef = _fireStoreDb.Collection(CollectionName)

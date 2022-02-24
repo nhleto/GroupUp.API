@@ -7,6 +7,9 @@ namespace GroupUp.API.Domain.Models
     public class Group : Base
     {
         [FirestoreProperty]
+        public string Name { get; set; }
+        
+        [FirestoreProperty]
         public IEnumerable<User> Users { get; set; }
     }
 }

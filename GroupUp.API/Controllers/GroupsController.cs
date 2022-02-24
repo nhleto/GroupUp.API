@@ -20,7 +20,7 @@ namespace GroupUp.API.Controllers
         }
         
         [HttpGet]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetAllGroups()
         {
             try
@@ -52,7 +52,7 @@ namespace GroupUp.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromBody] Group group)
+        public async Task<IActionResult> AddGroup([FromBody] Group group)
         {
             try
             {
