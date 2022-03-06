@@ -52,18 +52,18 @@ namespace GroupUp.API.Controllers
             }
         }
 
-        [HttpPost("Signin")]
-        public async Task<IActionResult> SignIn([FromBody] User user)
-        {
-            try
-            {
-                var result = await _userWorkflow.HandleSignIn(user);
-                return Ok(result);
-            }
-            catch (FirebaseAuthException ex)
-            {
-                throw new Exception("Failure to SignIn user: " + ex);
-            }
-        }
+        // [HttpPost("Signin")]
+        // public async Task<IActionResult> SignIn([FromBody] User user)
+        // {
+        //     try
+        //     {
+        //         var result = await _userWorkflow.HandleSignIn(user);
+        //         return Ok(result);
+        //     }
+        //     catch (FirebaseAuthException ex)
+        //     {
+        //         throw new Exception("Failure to SignIn user: " + ex);
+        //     }
+        // }
     }
 }

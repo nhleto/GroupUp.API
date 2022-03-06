@@ -6,6 +6,6 @@ namespace GroupUp.API.Domain.Interfaces
 {
     public interface IUserWorkflow
     {
-        public Task<UserDto> HandleSignIn(User user);
+        // public Task<UserDto> HandleSignIn(User user);
     }
 }

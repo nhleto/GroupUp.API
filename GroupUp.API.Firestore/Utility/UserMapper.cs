@@ -10,8 +10,8 @@ namespace GroupUp.API.Firestore.Utility
             return new User
             {
                 DisplayName = user.DisplayName,
-                Email = user.DisplayName + "@example.com",
-                Password = user.Password
+                // Email = user.DisplayName + "@example.com",
+                // Password = user.Password
             };
         }
     }

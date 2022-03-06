@@ -15,6 +15,6 @@ namespace GroupUp.API.Domain.Interfaces
         public Task<User> Get(User record);
         public Task<IEnumerable<User>> GetAll();
         public Task<List<User>> QueryRecords(Query query);
-        public Task<UserRecord> FindUserByEmail(User user);
+        // public Task<UserRecord> FindUserByEmail(User user);
     }
 }
