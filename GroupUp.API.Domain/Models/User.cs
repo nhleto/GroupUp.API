@@ -14,6 +14,6 @@ namespace GroupUp.API.Domain.Models
         public IEnumerable<string> WishList { get; set; }
         
         [FirestoreProperty]
-        public IEnumerable<Group> Groups { get; set; }
+        public IEnumerable<string> GroupIds { get; set; }
     }
 }

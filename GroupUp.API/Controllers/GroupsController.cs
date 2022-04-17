@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using GroupUp.API.Domain.Interfaces;
 using GroupUp.API.Domain.Models;
+using GroupUp.API.Firestore.Workflows;
 
 namespace GroupUp.API.Controllers
 {
@@ -13,10 +14,12 @@ namespace GroupUp.API.Controllers
     public class GroupsController : ControllerBase
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IGroupCreationWorkflow _groupCreationWorkflow;
 
-        public GroupsController(IGroupRepository groupRepository)
+        public GroupsController(IGroupRepository groupRepository, IGroupCreationWorkflow groupCreationWorkflow)
         {
             _groupRepository = groupRepository;
+            _groupCreationWorkflow = groupCreationWorkflow;
         }
         
         [HttpGet]
@@ -56,6 +59,7 @@ namespace GroupUp.API.Controllers
             try
             {
                 var result = await _groupRepository.Add(group);
+                await _groupCreationWorkflow.AddGroupsToUser(result);
                 return Ok(result);
             }
             catch (Exception e)

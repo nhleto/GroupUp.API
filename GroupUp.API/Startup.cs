@@ -13,6 +13,7 @@ using GroupUp.API.Domain;
 using GroupUp.API.Domain.Interfaces;
 using GroupUp.API.Firestore;
 using GroupUp.API.Firestore.Utility;
+using GroupUp.API.Firestore.Workflows;
 
 namespace GroupUp.API
 {
@@ -58,6 +59,7 @@ namespace GroupUp.API
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton(config);            
             services.AddSingleton<IGroupRepository, GroupRepository>();
+            services.AddSingleton<IGroupCreationWorkflow, GroupCreationWorkflow>();
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

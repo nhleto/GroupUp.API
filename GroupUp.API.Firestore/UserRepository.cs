@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Google.Cloud.Firestore;
@@ -22,12 +24,38 @@ namespace GroupUp.API.Firestore
         }
 
         
-        public async Task<bool> Update(User record)
+        public async Task<WriteResult> Update(User record)
         {
             var recordRef = _fireStoreDb.Collection(CollectionName)
                 .Document(record.Id);
             var result = await recordRef.SetAsync(record, SetOptions.MergeAll);
-            return true;
+            return result;
+        }
+
+        public async Task BatchUpdate(IEnumerable<User> users, Group group)
+        {
+            var batch = _fireStoreDb.StartBatch();
+            users = users.ToList();
+            
+            var result = users.Select(x =>
+                _fireStoreDb.Collection(CollectionName).Document(x.Id)).ToList();
+
+            var data = result.Select(x => new Dictionary<string, object>
+            {
+                {
+                    "GroupId", group.Id
+                }
+            });
+
+            var zippedList = result.Zip(data).ToList();
+
+            foreach (var joinedList in zippedList)
+            {
+                var (first, second) = joinedList;
+                batch.Update(first, second);
+            }
+
+            await batch.CommitAsync();
         }
 
         public async Task<bool> Delete(User record)
