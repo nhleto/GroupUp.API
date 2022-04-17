@@ -32,6 +32,7 @@ namespace GroupUp.API.Firestore
             return result;
         }
 
+        // Need to write FirebaseFunction that takes user Id on create an inserts Id into DB
         public async Task BatchUpdate(IEnumerable<User> users, Group group)
         {
             var batch = _fireStoreDb.StartBatch();
