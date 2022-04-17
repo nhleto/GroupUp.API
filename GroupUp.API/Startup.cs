@@ -23,7 +23,7 @@ namespace GroupUp.API
     public class Startup
     {
         // Dependant on the computer
-        private const string Filepath = "../secret-santa-api-key.json";
+        private const string Filepath = "../../../secret-santa-api-key.json";
         private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IWebHostEnvironment environment)
@@ -74,8 +74,7 @@ namespace GroupUp.API
                         ValidateIssuer = true,
                         ValidIssuer = "https://securetoken.google.com/" + firebaseProjectName,
                         ValidateAudience = true,
-                        ValidAudience = firebaseProjectName,
-                        ValidateLifetime = true
+                        ValidAudience = firebaseProjectName
                     };
                 });
             

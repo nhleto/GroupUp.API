@@ -37,27 +37,23 @@ namespace GroupUp.API.Firestore
 
         public async Task<bool> Delete(Group record)
         {
-            var recordRef = _fireStoreDb.Collection(CollectionName)
-                .Document(record.Id);
+            var recordRef = _fireStoreDb.Collection(CollectionName).Document(record.Id);
             var result = await recordRef.DeleteAsync();
             return true;
         }
 
         public async Task<Group> Get(Group record)
         {
-            var docRef = _fireStoreDb.Collection(CollectionName)
-                .Document(record.Id);
+            var docRef = _fireStoreDb.Collection(CollectionName).Document(record.Id);
             var snapshot = await docRef.GetSnapshotAsync();
-            if (snapshot.Exists)
-            {
-                var group = snapshot.ConvertTo<Group>();
-                group.Id = snapshot.Id;
-                return group;
-            }
-            else
+            if (!snapshot.Exists)
             {
                 return null;
             }
+
+            var group = snapshot.ConvertTo<Group>();
+            group.Id = snapshot.Id;
+            return group;
         }
 
         public async Task<IEnumerable<Group>> GetAll()

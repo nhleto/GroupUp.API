@@ -20,7 +20,6 @@ namespace GroupUp.API.Controllers
         }
         
         [HttpGet]
-        // [Authorize]
         public async Task<IActionResult> GetAllGroups()
         {
             try
