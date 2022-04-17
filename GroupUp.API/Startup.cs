@@ -1,6 +1,4 @@
 using System;
-using System.Reflection;
-using AutoMapper;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,14 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using GroupUp.API.Domain;
 using GroupUp.API.Domain.Interfaces;
 using GroupUp.API.Firestore;
 using GroupUp.API.Firestore.Utility;
-using GroupUp.API.Firestore.Workflows;
 
 namespace GroupUp.API
 {
@@ -62,7 +58,6 @@ namespace GroupUp.API
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton(config);            
             services.AddSingleton<IGroupRepository, GroupRepository>();
-            services.AddSingleton<IUserWorkflow, UserWorkflow>();
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

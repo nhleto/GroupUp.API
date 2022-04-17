@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using GroupUp.API.Domain;
-using GroupUp.API.Domain.DTO;
 using GroupUp.API.Domain.Interfaces;
 using GroupUp.API.Domain.Models;
-using GroupUp.API.Firestore.Utility;
 
 namespace GroupUp.API.Firestore
 {
@@ -25,20 +21,6 @@ namespace GroupUp.API.Firestore
             _fireStoreDb = FirestoreDb.Create(config.ProjectId);
         }
 
-        public async Task<UserDto> SignUp(User record)
-        {
-            try
-            {
-                // This mapper isn't something that should be in the client...
-                var mappedUser = UserMapper.AppendEmailToUsername(record);
-                var newUser = await FirebaseAuth.DefaultInstance.CreateUserAsync(_mapper.Map<UserRecordArgs>(mappedUser));
-                return _mapper.Map<UserDto>(newUser);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Failure to CreateUserAsync: " + e);
-            }
-        }
         
         public async Task<bool> Update(User record)
         {
@@ -67,10 +49,8 @@ namespace GroupUp.API.Firestore
                 usr.Id = snapshot.Id;
                 return usr;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public async Task<IEnumerable<User>> GetAll()
