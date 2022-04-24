@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using GroupUp.API.Domain.Interfaces;
+using GroupUp.API.Domain.Models;
 
 namespace GroupUp.API.Controllers
 {
@@ -30,6 +31,21 @@ namespace GroupUp.API.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] User user)
+        {
+            try
+            {
+                var result = await _userRepository.Create(user);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
                 throw;
             }
         }

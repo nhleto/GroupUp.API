@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using GroupUp.API.Domain;
+using GroupUp.API.Domain.DTO;
 using GroupUp.API.Domain.Interfaces;
 using GroupUp.API.Domain.Models;
 
@@ -23,7 +25,18 @@ namespace GroupUp.API.Firestore
             _fireStoreDb = FirestoreDb.Create(config.ProjectId);
         }
 
-        
+        public async Task<UserDto> Create(User user)
+        {
+            var args = new UserRecordArgs
+            {
+                Email = user.DisplayName,
+                Password = user.Password
+            };
+
+            var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(args);
+            return _mapper.Map<UserRecord, UserDto>(userRecord);
+        }
+
         public async Task<WriteResult> Update(User record)
         {
             var recordRef = _fireStoreDb.Collection(CollectionName)

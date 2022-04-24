@@ -9,11 +9,15 @@ namespace GroupUp.API.Domain.Models
     {
         [FirestoreProperty]
         public string DisplayName { get; set; }
-        
+
         [FirestoreProperty]
         public IEnumerable<string> WishList { get; set; }
         
         [FirestoreProperty]
         public IEnumerable<string> GroupIds { get; set; }
+
+        public string Email { get; set; }
+        
+        public string Password { get; set; }
     }
 }

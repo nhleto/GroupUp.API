@@ -71,7 +71,8 @@ namespace GroupUp.API
                         ValidateIssuer = true,
                         ValidIssuer = "https://securetoken.google.com/" + firebaseProjectName,
                         ValidateAudience = true,
-                        ValidAudience = firebaseProjectName
+                        ValidAudience = firebaseProjectName,
+                        ValidateLifetime = true
                     };
                 });
             

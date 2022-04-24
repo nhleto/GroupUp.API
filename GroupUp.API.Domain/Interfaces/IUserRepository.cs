@@ -9,6 +9,7 @@ namespace GroupUp.API.Domain.Interfaces
 {
     public interface IUserRepository
     {
+        public Task<UserDto> Create(User user);
         public Task<WriteResult> Update(User record);
         public Task<bool> Delete(User record);
         public Task<User> Get(User record);
