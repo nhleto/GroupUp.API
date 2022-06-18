@@ -9,7 +9,7 @@ namespace GroupUp.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+    // [Authorize]
     [Produces("application/json")]
     public class UsersController : ControllerBase
     {

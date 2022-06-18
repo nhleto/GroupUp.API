@@ -10,6 +10,7 @@ using GroupUp.API.Domain;
 using GroupUp.API.Domain.DTO;
 using GroupUp.API.Domain.Interfaces;
 using GroupUp.API.Domain.Models;
+using GroupUp.API.Firestore.Utility;
 
 namespace GroupUp.API.Firestore
 {
@@ -27,13 +28,14 @@ namespace GroupUp.API.Firestore
 
         public async Task<UserDto> Create(User user)
         {
-            var args = new UserRecordArgs
+            if (string.IsNullOrEmpty(user.DisplayName) || string.IsNullOrEmpty(user.Password))
             {
-                Email = user.DisplayName,
-                Password = user.Password
-            };
+                throw new Exception("Invalid login credentials");
+            }
+            
+            var freshBakedUser = UserMapper.AppendEmailToUsername(user);
 
-            var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(args);
+            var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(freshBakedUser);
             return _mapper.Map<UserRecord, UserDto>(userRecord);
         }
 
