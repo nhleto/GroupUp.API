@@ -40,8 +40,8 @@ namespace GroupUp.API.Controllers
         {
             try
             {
-                var result = await _userRepository.Create(user);
-                return Ok(result);
+                _userRepository.Create(user);
+                return Ok();
             }
             catch (Exception ex)
             {

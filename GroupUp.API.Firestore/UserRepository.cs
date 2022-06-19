@@ -135,5 +135,16 @@ namespace GroupUp.API.Firestore
 
             return list;
         }
+
+        /// <summary>
+        /// Deletes up to 200 Firebase Auth Users at once
+        /// </summary>
+        public async Task NukeUsers()
+        {
+            var users = FirebaseAuth.DefaultInstance.ListUsersAsync(new ListUsersOptions{PageSize = 200});
+            var usersResult = await users.ReadPageAsync(200);
+            var ids = usersResult.Select(u => u.Uid).ToList();
+            await FirebaseAuth.DefaultInstance.DeleteUsersAsync(ids);
+        }
     }
 }
