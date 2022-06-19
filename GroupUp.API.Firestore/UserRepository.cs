@@ -36,7 +36,8 @@ namespace GroupUp.API.Firestore
             var freshBakedUser = UserMapper.AppendEmailToUsername(user);
 
             var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(freshBakedUser);
-            return _mapper.Map<UserRecord, UserDto>(userRecord);
+            var mappedUser = _mapper.Map<UserRecord, UserDto>(userRecord);
+            return await AttachToken(mappedUser);
         }
 
         public async Task<WriteResult> Update(User record)
@@ -145,6 +146,13 @@ namespace GroupUp.API.Firestore
             var usersResult = await users.ReadPageAsync(200);
             var ids = usersResult.Select(u => u.Uid).ToList();
             await FirebaseAuth.DefaultInstance.DeleteUsersAsync(ids);
+        }
+        
+        private async Task<UserDto> AttachToken(UserDto user)
+        {
+            var token = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync(user.Uid);
+            user.Token = token;
+            return user;
         }
     }
 }
