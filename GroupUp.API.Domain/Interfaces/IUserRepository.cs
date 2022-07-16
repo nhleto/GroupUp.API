@@ -9,12 +9,13 @@ namespace GroupUp.API.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        public Task<UserDto> Create(User user);
-        public Task<WriteResult> Update(User record);
-        public Task<bool> Delete(User record);
-        public Task<User> Get(User record);
-        public Task<IEnumerable<User>> GetAll();
-        public Task<List<User>> QueryRecords(Query query);
-        public Task BatchUpdate(IEnumerable<User> users, Group group);
+        Task<UserDto> Create(User user);
+        Task<WriteResult> Update(User record);
+        Task<bool> Delete(User record);
+        Task<User> Get(User record);
+        Task<IEnumerable<User>> GetAll();
+        Task<List<User>> QueryRecords(Query query);
+        Task BatchUpdate(IEnumerable<User> users, Group group);
+        Task NukeUsers();
     }
 }

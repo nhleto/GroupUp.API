@@ -49,5 +49,20 @@ namespace GroupUp.API.Controllers
                 throw;
             }
         }
+
+        [HttpPost("nuke")]
+        public async Task<IActionResult> NukeUsers()
+        {
+            try
+            {
+                await _userRepository.NukeUsers();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }
